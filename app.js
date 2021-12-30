@@ -7,6 +7,7 @@ const routes = require('./routes/index');
 const app = express();
 dotenv.config();
 
+app.use('/uploads', express.static('uploads')); // Makes Upload Folder Available Publically
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
