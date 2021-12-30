@@ -12,13 +12,13 @@ exports.create = async (req, res) => {
 		// ELSE
 		const product = await new Product({
 			name: req.body.name,
-			imageUrl: req.body.imageUrl,
+			imageUrl: req.file.path,
 			price: req.body.price,
 			detail: req.body.detail,
 			quantity: req.body.quantity,
 		});
 		await product.save();
-		res.status(200).json({ message: 'Product Added Successfully !' });
+		res.status(200).json({ message: 'Product Added Successfully !', product });
 	} catch (error) {
 		return res.status(401).json({
 			message: 'Error at Creating Product !' || error,
@@ -68,7 +68,7 @@ exports.findOne = async (req, res) => {
 // Delete a Product
 exports.delete = async (req, res) => {
 	try {
-		const product = await Product.remove({ _id: req.params.id });
+		const product = await Product.deleteOne({ _id: req.params.id });
 		return res.status(200).json({
 			product,
 			message: 'Deleted !',
