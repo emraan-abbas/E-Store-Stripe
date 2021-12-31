@@ -1,5 +1,6 @@
 const Product = require('../models/product.model');
-var fs = require('fs');
+const fs = require('fs');
+const Stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 // Creating Product
 exports.create = async (req, res) => {
@@ -19,7 +20,7 @@ exports.create = async (req, res) => {
 			quantity: req.body.quantity,
 		});
 		await product.save();
-		res.status(200).json({ message: 'Product Added Successfully !', product });
+		return res.status(200).json({ message: 'Product Added Successfully !', product });
 	} catch (error) {
 		return res.status(401).json({
 			message: 'Error at Creating Product !' || error,
@@ -72,7 +73,7 @@ exports.delete = async (req, res) => {
 		// Deleting Image
 		const url = await Product.findById({ _id: req.params.id });
 		const img = url.imageUrl;
-		fs.unlink(img, function (err) {
+		fs.unlink(img, (err) => {
 			if (err) {
 				throw err;
 			}
@@ -122,7 +123,7 @@ exports.update = async (req, res) => {
 		);
 		if (product) {
 			return res.status(200).json({
-				message: 'Updated',
+				message: product,
 			});
 		} else {
 			return res.status(401).json({
@@ -136,3 +137,17 @@ exports.update = async (req, res) => {
 	}
 };
 // Update Ends Here
+
+// ------------------------------ //
+
+// Checkout Here
+exports.checkOut = async (req, res) => {
+	try {
+		// CHECKOUT HERE
+	} catch (error) {
+		return res.status(401).json({
+			message: 'Error at Checkout !' || error,
+		});
+	}
+};
+// Checkout Ends Here

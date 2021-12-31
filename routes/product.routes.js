@@ -1,4 +1,3 @@
-const cliBoxes = require('cli-boxes');
 const express = require('express');
 const router = express.Router();
 
@@ -25,5 +24,6 @@ router.get('/', product.findAll);
 router.get('/:id', product.findOne);
 router.delete('/:id', product.delete);
 router.put('/:id', upload.single('imageUrl'), product.update);
+router.post('/checkout', product.checkOut);
 
 module.exports = router;
