@@ -121,7 +121,6 @@ exports.update = async (req, res) => {
 			}
 		);
 		if (product) {
-			console.log(product);
 			return res.status(200).json({
 				message: 'Updated',
 			});
