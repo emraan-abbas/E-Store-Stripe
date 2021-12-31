@@ -24,6 +24,6 @@ router.post('/', upload.single('imageUrl'), product.create);
 router.get('/', product.findAll);
 router.get('/:id', product.findOne);
 router.delete('/:id', product.delete);
-router.put('/:id', product.update);
+router.put('/:id', upload.single('imageUrl'), product.update);
 
 module.exports = router;

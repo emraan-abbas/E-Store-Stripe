@@ -1,4 +1,5 @@
 const Product = require('../models/product.model');
+var fs = require('fs');
 
 // Creating Product
 exports.create = async (req, res) => {
@@ -68,6 +69,15 @@ exports.findOne = async (req, res) => {
 // Delete a Product
 exports.delete = async (req, res) => {
 	try {
+		// Deleting Image
+		const url = await Product.findById({ _id: req.params.id });
+		const img = url.imageUrl;
+		fs.unlink(img, function (err) {
+			if (err) {
+				throw err;
+			}
+		});
+		// Deleting Data
 		const product = await Product.deleteOne({ _id: req.params.id });
 		return res.status(200).json({
 			product,
@@ -86,12 +96,24 @@ exports.delete = async (req, res) => {
 // Update a Product
 exports.update = async (req, res) => {
 	try {
+		// Updating Image
+		// const url = await Product.findById({ _id: req.params.id });
+		// const img = url.imageUrl;
+		// fs.writeFile(img, function (err) {
+		// 	if (err) {
+		// 		throw err;
+		// 	}
+		// 	else{
+
+		// 	}
+		// });
+		// Updating Data
 		const product = await Product.updateOne(
 			{ _id: req.params.id },
 			{
 				$set: {
 					name: req.body.name,
-					imageUrl: req.body.imageUrl,
+					imageUrl: req.file.path,
 					price: req.body.price,
 					detail: req.body.detail,
 					quantity: req.body.quantity,
@@ -99,6 +121,7 @@ exports.update = async (req, res) => {
 			}
 		);
 		if (product) {
+			console.log(product);
 			return res.status(200).json({
 				message: 'Updated',
 			});
