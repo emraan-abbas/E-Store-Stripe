@@ -7,6 +7,11 @@ const routes = require('./routes/index');
 const app = express();
 dotenv.config();
 
+// Setting up frontend
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'views')));
+// Setting up frontend ends Here
+
 app.use('/uploads', express.static('uploads')); // Makes Upload Folder Available Publically
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));

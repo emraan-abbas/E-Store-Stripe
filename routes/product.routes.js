@@ -24,6 +24,6 @@ router.get('/', product.findAll);
 router.get('/:id', product.findOne);
 router.delete('/:id', product.delete);
 router.put('/:id', upload.single('imageUrl'), product.update);
-router.post('/checkout', product.checkOut);
+router.post('/payment', product.payment);
 
 module.exports = router;
