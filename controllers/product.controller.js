@@ -147,6 +147,7 @@ exports.payment = async (req, res) => {
 	try {
 		const domain = 'http://localhost:3000';
 		const { product } = req.body;
+		console.log('Product: ', product);
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ['card'],
 			line_items: [
@@ -166,7 +167,7 @@ exports.payment = async (req, res) => {
 			cancel_url: `${domain}/cancel.html`,
 		});
 
-		console.log(session, 'hereeeee');
+		console.log('ID: ', session.id);
 		res.redirect(303, session.url);
 	} catch (error) {
 		console.log(error);
